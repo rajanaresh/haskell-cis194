@@ -31,4 +31,19 @@ fun2' = sum . (filter even) . (takeWhile (/=0)) . (iterate func)
           | otherwise = (3 * x) + 1
 
 
---Ex 2: Folding with trees
+--Ex 2: Folding with 
+data Tree a = Leaf
+            | Node Integer (Tree a) a (Tree a)
+            deriving (Show, Eq)
+
+foldTree :: [a] -> Tree a
+foldTree = foldr f Leaf
+  where f e Leaf               = Node 0 Leaf e Leaf
+        f e (Node _ l el r)    = case ((count l) <= (count r)) of
+          True  -> Node (1 + height l) (f e l) el r
+          False -> Node (1 + height r) l el (f e r)
+        count Leaf             = 0
+        count (Node _ l el r)  = (count l) + (count r) + 1
+        height Leaf            = 0
+        height (Node h _ _ _ ) = h
+
