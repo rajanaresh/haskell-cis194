@@ -1,8 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Data.List ( takeWhile
-                 , iterate
-                 )
+-- import Data.List ( takeWhile
+--                  , iterate
+--                  )
+
 -- Ex 1: Wholemeal programming
 fun1 :: [Integer] -> Integer
 fun1 [] = 1
@@ -40,10 +41,10 @@ foldTree :: [a] -> Tree a
 foldTree = foldr f Leaf
   where f e Leaf               = Node 0 Leaf e Leaf
         f e (Node _ l el r)    = case ((count l) <= (count r)) of
-          True  -> Node (1 + height l) (f e l) el r
-          False -> Node (1 + height r) l el (f e r)
-        count Leaf             = 0
-        count (Node _ l el r)  = (count l) + (count r) + 1
+          True  -> Node (1 + height (f e l)) (f e l) el r
+          False -> Node (1 + height (f e r)) l el (f e r)
+        count Leaf             = (0::Integer)
+        count (Node _ l _ r)  = (count l) + (count r) + 1 :: Integer
         height Leaf            = 0
         height (Node h _ _ _ ) = h
 
