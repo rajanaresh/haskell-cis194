@@ -48,3 +48,12 @@ foldTree = foldr f Leaf
         height Leaf            = 0
         height (Node h _ _ _ ) = h
 
+
+--Ex 3: More folds!        
+xor :: [Bool] -> Bool
+xor = foldr (\x y -> ((not x) && y) || (x && (not y))) False
+
+map' :: (a -> b) -> [a] -> [b]
+map' f = foldr (\x y -> ((f x):y)) []
+
+--Ex 4: Finding primes
