@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -Wall #-}
 
--- import Data.List ( takeWhile
---                  , iterate
---                  )
+import Data.List ( nub
+                 , (\\)
+                 )
 
 -- Ex 1: Wholemeal programming
 fun1 :: [Integer] -> Integer
@@ -57,3 +57,5 @@ map' :: (a -> b) -> [a] -> [b]
 map' f = foldr (\x y -> ((f x):y)) []
 
 --Ex 4: Finding primes
+sieveSundaram :: Integer -> [Integer]
+sieveSundaram n = [2*x+1 | x <- [1..n]] \\ nub [i+j+2*i*j | i <- [1..n], j <- [1..n]]
