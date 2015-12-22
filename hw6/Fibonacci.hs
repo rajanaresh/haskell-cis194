@@ -40,7 +40,10 @@ streamFromSeed f e = Cons e (streamFromSeed f (f e))
 
 --Ex 5:
 nats :: Stream Integer
-nats = streamFromSeed (+1) 1
+nats = streamFromSeed (+1) 0
+
+interleaveStreams :: Stream a -> Stream a -> Stream a
+interleaveStreams (Cons r rs) (Cons s ss) = (Cons r (Cons s (interleaveStreams rs ss)))
 
 -- ruler :: Stream Integer
 -- ruler = 
