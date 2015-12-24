@@ -42,8 +42,12 @@ streamFromSeed f e = Cons e (streamFromSeed f (f e))
 nats :: Stream Integer
 nats = streamFromSeed (+1) 0
 
+--Cheated
 interleaveStreams :: Stream a -> Stream a -> Stream a
-interleaveStreams (Cons r rs) (Cons s ss) = (Cons r (Cons s (interleaveStreams rs ss)))
+interleaveStreams (Cons x xs) ys = (Cons x (interleaveStreams ys xs))
+                                   
+--The below implementation of interleaveStreams doesn't work for ruler, why?
+--interleaveStreams (Cons r rs) (Cons s ss) = (Cons r (Cons s (interleaveStreams rs ss)))
 
--- ruler :: Stream Integer
--- ruler = 
+ruler :: Stream Integer
+ruler = foldr1 interleaveStreams (map streamRepeat [0..])
